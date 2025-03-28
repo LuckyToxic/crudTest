@@ -3,3 +3,4 @@ export { addNewsThunk, deleteNewsThunk, getAllNewsThunk, updateNewsThunk } from 
 export { newsReducer } from "./slice/newsSlice";
 
 export type {News,NewsWithoutId} from './model'
+
