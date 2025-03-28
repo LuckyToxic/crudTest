@@ -4,12 +4,12 @@ import MainPage from "../../pages/MainPage/MainPage";
 
 export default function router() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/LuckyToxic/crudTest">
       <Routes>
-        <Route path="/" element={<Layout/>}>
-            <Route path="/" element={<MainPage/>}/>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<MainPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
