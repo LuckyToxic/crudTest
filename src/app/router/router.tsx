@@ -2,12 +2,12 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import Layout from "../layout/Layout";
 import MainPage from "../../pages/MainPage/MainPage";
 
-export default function router() {
+export default function Router() {
   return (
-    <BrowserRouter basename="/LuckyToxic/crudTest">
+    <BrowserRouter basename="/crudTest">
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<MainPage />} />
+          <Route index element={<MainPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
