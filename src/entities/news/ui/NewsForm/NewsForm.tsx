@@ -6,6 +6,7 @@ import {
   DialogActions,
   TextField,
   Button,
+  useMediaQuery,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -20,6 +21,7 @@ type Props = {
 };
 
 export const NewsForm = ({ open, onClose, onSubmit, initialData }: Props) => {
+  const isMobile = useMediaQuery('(max-width:600px)')
   const {
     register,
     handleSubmit,
@@ -48,67 +50,103 @@ export const NewsForm = ({ open, onClose, onSubmit, initialData }: Props) => {
     onClose();
   };
 
-  return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      fullScreen={window.innerWidth < 600} 
-      PaperProps={{
-        sx: {
-          width: '80%',
-          maxWidth: { xs: '100%', sm: '500px' }, 
-          margin: { xs: 0, sm: 2 },
-          height: { xs: '40%', sm: 'auto' },
-          borderRadius:'20px'
-        }
-      }}
-    >
-      <DialogTitle sx={{ fontSize: { xs: '1.25rem', sm: '1.5rem' } }}>
-        {initialData ? "Edit News" : "Add News"}
-      </DialogTitle>
-      
-      <form onSubmit={handleSubmit(onFormSubmit)}>
-        <DialogContent dividers sx={{ padding: { xs: 1, sm: 2 } }}>
-          <TextField
-            {...register("title")}
-            label="Title"
-            fullWidth
-            margin="normal"
-            size="small"
-            error={!!errors.title}
-            helperText={errors.title?.message || " "}
-            FormHelperTextProps={{ style: { minHeight: '20px' } }}
-            sx={{ marginBottom: 2 }}
-          />
-          
-          <TextField
-            {...register("content")}
-            label="Content"
-            fullWidth
-            margin="normal"
-            multiline
-            minRows={window.innerWidth < 600 ? 3 : 4}
-            maxRows={window.innerWidth < 600 ? 6 : 8}
-            size="small"
-            error={!!errors.content}
-            helperText={errors.content?.message || " "}
-          />
-        </DialogContent>
+ return (
+   <Dialog
+     open={open}
+     onClose={onClose}
+     fullScreen={isMobile}
+     PaperProps={{
+       sx: {
+         width: "80vw", 
+         maxWidth: "500px",
+         margin: 0,
+         height: isMobile ? "60vh" : "auto",
+         maxHeight: isMobile ? "none" : "90vh",
+         borderRadius: "20px",
+         overflowY: "auto", 
+       },
+     }}
+   >
+     <DialogTitle
+       sx={{
+         fontSize: isMobile ? "1.2rem" : "1.5rem",
+         padding: isMobile ? "16px" : "24px 24px 16px",
+       }}
+     >
+       {initialData ? "Edit News" : "Add News"}
+     </DialogTitle>
 
-        <DialogActions sx={{ padding: { xs: 1, sm: 2 } }}>
-          <Button onClick={onClose} size="small">
-            Cancel
-          </Button>
-          <Button 
-            type="submit" 
-            variant="contained" 
-            disabled={!isValid}
-            size="small"
-          >
-            {initialData ? "Update" : "Add"}
-          </Button>
-        </DialogActions>
-      </form>
-    </Dialog>
-  );
+     <form onSubmit={handleSubmit(onFormSubmit)}>
+       <DialogContent
+         dividers
+         sx={{
+           padding: isMobile ? "8px 16px" : "16px 24px",
+         }}
+       >
+         <TextField
+           {...register("title")}
+           label="Title"
+           fullWidth
+           margin="normal"
+           size={isMobile ? "small" : "medium"}
+           error={!!errors.title}
+           helperText={errors.title?.message || " "}
+           FormHelperTextProps={{ style: { minHeight: "24px" } }}
+           sx={{
+             marginBottom: 2,
+             "& .MuiInputBase-root": {
+               fontSize: isMobile ? "0.875rem" : "1rem",
+             },
+           }}
+         />
+
+         <TextField
+           {...register("content")}
+           label="Content"
+           fullWidth
+           margin="normal"
+           multiline
+           minRows={isMobile ? 3 : 4}
+           maxRows={isMobile ? 8 : 12}
+           size={isMobile ? "small" : "medium"}
+           error={!!errors.content}
+           helperText={errors.content?.message || " "}
+           sx={{
+             "& .MuiInputBase-root": {
+               fontSize: isMobile ? "0.875rem" : "1rem",
+             },
+           }}
+         />
+       </DialogContent>
+
+       <DialogActions
+         sx={{
+           padding: isMobile ? "8px" : "16px 24px",
+           flexDirection: isMobile ? "column-reverse" : "row",
+           gap: 1,
+         }}
+       >
+         <Button
+           onClick={onClose}
+           size={isMobile ? "small" : "medium"}
+           fullWidth={isMobile}
+         >
+           Cancel
+         </Button>
+         <Button
+           type="submit"
+           variant="contained"
+           disabled={!isValid}
+           size={isMobile ? "small" : "medium"}
+           fullWidth={isMobile}
+           sx={{
+             marginLeft: isMobile ? 0 : "8px",
+           }}
+         >
+           {initialData ? "Update" : "Add"}
+         </Button>
+       </DialogActions>
+     </form>
+   </Dialog>
+ );
 };
