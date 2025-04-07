@@ -28,7 +28,6 @@ export default function Header() {
           px: { xs: 2, sm: 4, md: 6 },
         }}
       >
-        {/* Лого и название */}
         <Box
           component={Link}
           to="/"
@@ -62,24 +61,18 @@ export default function Header() {
 
         <Box sx={{ display: { xs: "none", sm: "flex" }, gap: 2 }}>
           <Button
-            component={Link}
-            to="/news"
             color="inherit"
             sx={{ textTransform: "none", fontWeight: 500 }}
           >
             Все новости
           </Button>
           <Button
-            component={Link}
-            to="/categories"
             color="inherit"
             sx={{ textTransform: "none", fontWeight: 500 }}
           >
             Категории
           </Button>
           <Button
-            component={Link}
-            to="/about"
             color="inherit"
             sx={{ textTransform: "none", fontWeight: 500 }}
           >
